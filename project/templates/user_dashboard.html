@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>User Dashboard</h1>
+        <div class="logout-button">
+            <form action="/logout" method="GET">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+            <label for="paper_name">Paper Name:</label>
+            <input type="text" name="paper_name" id="paper_name" required>
+            <label for="document_submission">Upload Document:</label>
+            <input type="file" name="document_submission" id="document_submission" required>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Submitted Documents</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Paper Name</th>
+                <th>Document</th>
+                <th>Feedback</th>
+            </tr>
+            {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                <td>{{ document.name }}</td>
+                <td>{{ document.paper_name }}</td>
+                <td><a href="/uploads/{{ document.document_submission }}" target="_blank">View Document</a></td>
+                <td>{{ document.feedback }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

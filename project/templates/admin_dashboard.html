@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Admin</h1>
+        <div class="logout-button">
+            <form action="/logout" method="GET">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+        <h2>Documents</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Paper Name</th>
+                <th>Document Submission</th>
+                <th>Feedback</th>
+                <th>Action</th>
+            </tr>
+            {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                <td>{{ document.name }}</td>
+                <td>{{ document.paper_name }}</td>
+                <td><a href="/uploads/{{ document.document_submission }}" target="_blank">{{ document.document_submission }}</a></td>
+                <td>{{ document.feedback }}</td>
+                <td>
+                    <form action="/feedback/{{ document.id }}" method="POST">
+                        <input type="text" name="feedback" placeholder="Enter feedback" required>
+                        <button type="submit">Submit Feedback</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
